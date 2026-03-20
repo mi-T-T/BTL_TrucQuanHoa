@@ -5,10 +5,9 @@ def load_and_clean_data(file_path):
     df = pd.read_csv(file_path, encoding='ISO-8859-1')
     
     # 2. Xử lý giá trị thiếu (Missing Values)
-    # Loại bỏ các dòng không có CustomerID vì không thể phân tích khách hàng
     # Loại bỏ các dòng không có Description (mô tả sản phẩm)
-    df.dropna(subset=['CustomerID', 'Description'], inplace=True)
-    
+    df.dropna(subset=[ 'Description'], inplace=True)
+    df['CustomerID'] = df['CustomerID'].fillna(0)
     # 3. Định dạng kiểu dữ liệu
     df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
     df['CustomerID'] = df['CustomerID'].astype(int).astype(str) # Chuyển về chuỗi 
@@ -36,4 +35,4 @@ def load_and_clean_data(file_path):
 df_clean = load_and_clean_data('data.csv')
 
 # Lưu file dữ liệu sau tiền xử lí
-df_clean.to_csv('ecommerce_cleaned.csv', index=False, encoding='utf-8-sig')
+df_clean.to_csv('cleaned.csv', index=False, encoding='utf-8-sig')
